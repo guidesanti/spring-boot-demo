@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "br.com.eventhorizon.demo.property1",
+      "type": "java.lang.String",
+      "description": "Description for br.com.eventhorizon.demo.property1."
+    }
+  ]
+}

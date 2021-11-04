@@ -1,0 +1,26 @@
+version: '2'
+services:
+  demo:
+    image: openjdk:latest
+    volumes:
+      - ./target/demo-0.0.1-SNAPSHOT.jar:/data/demo.jar
+      - ./src/main/resources/test.mf:/data/test.mf
+    container_name: demo
+    command: >
+      java -Dcom.sun.management.jmxremote=true
+      -Dcom.sun.management.jmxremote.port=10483
+      -Dcom.sun.management.jmxremote.rmi.port=10484
+      -Dcom.sun.management.jmxremote.ssl=false
+      -Dcom.sun.management.jmxremote.authenticate=false
+      -Djava.rmi.server.hostname=0.0.0.0
+      -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1g -Xms1g -jar /data/demo.jar
+    ports:
+      - '8090:8080'
+      - '10490:10484'
+      - '5010:5005'
+    networks:
+      - demo-net
+
+networks:
+  demo-net:
+    driver: bridge
